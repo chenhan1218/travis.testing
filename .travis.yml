@@ -1,0 +1,22 @@
+dist: trusty
+sudo: required
+language: generic
+env:
+  global:
+  - SUITE=xenial
+  - ARCH=armhf
+  - SUBARCH=raspi2
+  - PROJECT=ubuntu-cpc
+  - LIVE_CONFIG_DEBUG=true
+before_install:
+- sudo apt-get update
+
+install:
+- echo "Nothing to install"
+script:
+- ln -s /usr/share/livecd-rootfs/live-build/auto .
+- LB_BOOTSTRAP_INCLUDE="apt-transport-https gnupg" SUITE=xenial ARCH=armhf PROJECT=ubuntu-cpc SUBPROJECT=system-image SUBARCH=raspi2 lb config --apt-secure false --apt-source-archives false --bootstrap-flavour minimal --cache-stages false --distribution xenial --mode ubuntu --security false --binary-images none --chroot-filesystem ext4 --hdd-label cloudimg-rootfs --initramfs none --system normal --architectures armhf --bootstrap-qemu-arch armhf --bootstrap-qemu-static /usr/bin/qemu-arm-static --firmware-binary false --firmware-chroot false --linux-flavours raspi2 --mirror-bootstrap "http://ports.ubuntu.com/ubuntu-ports/" --mirror-binary "http://ports.ubuntu.com/ubuntu-ports/" --parent-mirror-bootstrap "http://ports.ubuntu.com/ubuntu-ports/" --parent-mirror-binary "http://ports.ubuntu.com/ubuntu-ports/"
+# - sudo lb build --verbose
+- sudo LB_BOOTSTRAP_INCLUDE="apt-transport-https gnupg" SUITE=xenial ARCH=armhf PROJECT=ubuntu-cpc SUBPROJECT=system-image SUBARCH=raspi2 lb build --verbose
+after_script:
+- ls -al
