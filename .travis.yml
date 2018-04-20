@@ -1,0 +1,17 @@
+sudo: required
+services:
+    - docker
+language: generic
+install:
+- echo "Nothing to install"
+script:
+- docker run --privileged -dit --name travis_build ubuntu:bionic bash
+- docker exec -ti travis_build pwd
+- docker exec -ti travis_build apt update
+- docker exec -ti travis_build apt install -y snapd
+- docker exec -ti travis_build systemctl start snapd.service
+- docker exec -ti travis_build snap install ubuntu-image
+- docker cp generic.model travis_build:/generic.model
+- docker exec -ti travis_build ubuntu-image -o ubuntu-core-16-amd64.img generic.model
+after_script:
+- ls -al
