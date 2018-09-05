@@ -1,0 +1,17 @@
+---
+dist: trusty
+sudo: required
+language: generic
+install:
+- sudo apt-get -qq update
+- sudo apt-get install python-pip
+# Get the latest cpplint
+- wget https://raw.githubusercontent.com/google/styleguide/gh-pages/cpplint/cpplint.py && chmod +x cpplint.py
+- sudo pip install pycodestyle
+script:
+# check all cpp files via cpplint.py
+- FILES=`find . \( -name \*.h -o -name \*.cpp -o -name \*.cc \)`; if [ ! -z "$FILES" ]; then ./cpplint.py $FILES ; else :; fi;
+# remove cpplint.py before pycodestyle as it doesn't pass the checker
+- rm cpplint.py
+# check python coding style
+- pycodestyle .
