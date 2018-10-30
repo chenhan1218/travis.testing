@@ -1,0 +1,16 @@
+sudo: required
+service:
+- docker
+language: generic
+before_install:
+- docker pull osrf/ros:melodic-desktop-full
+- docker run -v `pwd`:/mnt osrf/ros:melodic-desktop-full bash -c "cd /mnt;./exec.sh"
+deploy:
+  provider: releases
+  api_key:
+    secure: 2rOu7aLQKdwRRxK+0BkKTEgBVZ/KGLvYEzRYsPDIGyUWvk6WFeVa520Kbl0wgESOcO2X3Ookdm6/K+hPVY5Nb0yT0SKdcqEXKQ3sC6rraH5TvC2QGWOiZzT2Z5FcX8RJJCp3lS9QDT8k6vdLVp/J12sGf1RtMAv9FF0cAN62dIEeNNTqTqPWMTiw7Rt4M2XQGq2TIBK/t15jxoTg1OpPTpLI7X+p86MmSVIfPy9nq06ewSAEsOjDU0p7UwMmXPhfwp6N99nfmRHtXbvjZo+fQFd8yrkK7vTmQqdUV8v9FbXaVo6koweiQWpLfnY0qSGSgX+0jDGUCxI7Coq6p2NSJVa3vqKcE24SAbqtZfq0bg85DdPhJTL1HlJ9HZ8WmC24K+ojalaOEKei0zppWKLtAyrXSt67tn4Vc5TC6d+o/Jv+V/BHK+/4cAxYK1O6FR1WZqt1g6FbitwezB9Vsh5Q3qH4FfpWOD23NxWoa/76KkGbugQvohqx/QFw8rhm+nKCG8hdsdoySxnjjeCPZYPHDNk+38wpfBckgGRdHhfNO5A1XAq2z4eNj8edDU4jZ4X6mb9/zzAtq8RGPwBBjvgu4cosBQ3LjIGctbYvWiBWoWG5FxmJVsAZWlqaRmtsy4JbIhSoyNEWKKBt/79iKCT9/ERs5clyF3c0GhKbLUd/6Bo=
+  skip_cleanup: true
+  file_glob: true
+  file: out*.ogv
+  on:
+    tags: true
