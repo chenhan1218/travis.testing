@@ -4,7 +4,7 @@ service:
 language: generic
 before_install:
 - docker pull osrf/ros:melodic-desktop-full
-- docker run -v `pwd`:/mnt osrf/ros:melodic-desktop-full bash -c "cd /mnt;./exec.sh"
+- docker run -v `pwd`:/mnt osrf/ros:melodic-desktop-full bash -c "cd /mnt;./exec_2d.sh"
 deploy:
   provider: releases
   api_key:
